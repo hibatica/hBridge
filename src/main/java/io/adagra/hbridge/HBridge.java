@@ -1,19 +1,32 @@
 package io.adagra.hbridge;
 
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class HBridge extends JavaPlugin {
 
+    private FileConfiguration config;
+
     @Override
     public void onEnable() {
-        // Plugin startup logic
-        System.out.println("Plugin has been enabled");
+
+        saveDefaultConfig();
+        this.config = getConfig();
+
+        try {
+            DiscordBot.init(this);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
-        System.out.println("Plugin has been disabled");
+
+    }
+
+    public FileConfiguration getConfiguration() {
+        return this.config;
     }
 }
