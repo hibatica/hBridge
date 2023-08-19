@@ -4,6 +4,7 @@ import io.adagra.hbridge.listeners.discord.OnMessageReceived;
 import io.adagra.hbridge.listeners.discord.OnReadyEvent;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import java.time.Duration;
 
@@ -16,6 +17,7 @@ public class DiscordBot {
         DiscordBot.plugin = plugin;
 
         jda = JDABuilder.createDefault(plugin.getConfiguration().getString("discord.botToken"))
+                .enableIntents(GatewayIntent.MESSAGE_CONTENT)
                 .addEventListeners(new OnReadyEvent())
                 .addEventListeners(new OnMessageReceived(plugin))
                 .build()
